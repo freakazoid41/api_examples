@@ -6,18 +6,19 @@ from json import dumps
 class RequestController(Resource):
     def get(self,model,id=None):
         model = self.load(model)
-        model.get(id)
-        return jsonify({'falann':'boyle'})
+        return model.get({'id':id})
         
-    def put(self, model):
+    def patch(self, model,id=None):
+        print(id)
         print('falan')
-        print(request.form['data'])
+        print(request.form)
+        #model.get(id)
         return {'falann':'boyle'} 
     def post(self, model):
-        print(request.form['data'])
+        print(request.form)
         return {'falann':'boyle'} 
-    def delete(self, model):
-        print(request.form['data'])
+
+    def delete(self, model,id=None):
         return {'falann':'boyle'}    
 
     def load(self,model):

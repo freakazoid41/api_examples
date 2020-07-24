@@ -7,14 +7,20 @@ gh = general()
 
 @app.before_request
 def enter():
-    print(request.endpoint)
     # request - flask.request
-    if 'x-token' in request.headers or request.endpoint == 'login':
-        #check token
-        pass
+    if 'X-TOKEN' in request.headers or request.endpoint == 'login':
+        if request.endpoint != 'login':
+            #check token
+            if gh.checkToken(request.headers)==False:
+                return Response('Token Is Not Valid..', 401)
+            else:    
+                pass
+        else:
+            pass    
     else:
         return Response('Token Is Not Valid..', 401)
         #print(request.headers['x-token'])
+       
 
 '''@app.after_request
 def exit(response):
@@ -24,7 +30,7 @@ def exit(response):
 
 @app.route('/login', methods = ['POST'])
 def login():
-    return jsonify(gh.login(request.form))
+    return jsonify(gh.login(request.form,request.headers))
 
         
 
